@@ -1,16 +1,14 @@
 package Package;
 
-import java.util.ArrayList;
-
 public class AltoMando {
 	private int NAM; //NAM = Numero Alto Mando
 	private String Nombre;
-	private ArrayList<Pokemon> Pokemones;
-	
+	private Pokemon[]CP;
+	int CantidadPokemon = 6;
 	public AltoMando(int NAM, String Nombre) {
 		this.NAM = NAM;
 		this.Nombre = Nombre;
-		this.Pokemones = new ArrayList<>();
+		this.CP = new Pokemon[CantidadPokemon];
 	}
 
 	public int getNAM() {
@@ -29,12 +27,10 @@ public class AltoMando {
 		Nombre = nombre;
 	}
 
-	public ArrayList<Pokemon> getPokemones() {
-		return Pokemones;
-	}
-
-	public void Agregar(Pokemon pokemon) {
-		Pokemones.add(pokemon);
+	public void AñadirPokemon1(Pokemon pokemon, int indice) {
+		CP[indice]= pokemon;
+		
+		
 	}
 
 }

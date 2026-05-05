@@ -6,12 +6,12 @@ public class Registros {
 	private String nombre;
 	private ArrayList<Pokemon> Pokemones;
 	private ArrayList<Boolean> Estados;
-	private ArrayList<String> Medallas;
-	public Registros(String nombre) {
+	private String [] Medallas;
+	public Registros(String nombre,int CantidadMedallas) {
 		this.nombre = nombre;
 		this.Pokemones = new ArrayList<>();
 		this.Estados = new ArrayList<>();
-		this.Medallas = new ArrayList<>();
+		this.Medallas = new String[CantidadMedallas];
 		
 		
 	}
@@ -29,8 +29,8 @@ public class Registros {
 		Estados.add(estado);
 		
 	}
-	public void AñadirMedallas(String NombreMedalla) {
-		Medallas.add(NombreMedalla);
+	public void AñadirMedallas(String NombreMedalla,int indice) {
+		Medallas[indice] = NombreMedalla;
 	}
 	
 	

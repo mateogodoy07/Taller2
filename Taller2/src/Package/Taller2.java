@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.random.*;
 public class Taller2 {
@@ -75,11 +76,16 @@ public class Taller2 {
 				String[] partes1 = linea.split(";");
 				int NAM = Integer.valueOf(partes1[0]); //NAM = Numero Alto Mando
 				String Nombre = partes1[1];
+				AltoMando altomando = new AltoMando(NAM,Nombre);
 				for(int j = 0 ;j < 6; j++) {
 					String PAM = partes1[j+2]; // PAM = Pokemon Alto Mando
+					for(Pokemon u: Pokemones) {
+						if(u.getPokemon().equals(PAM)) {
+							altomando.AñadirPokemon1(u, j);
+						}
+					}
 				}
-				AltoMando altomando = new AltoMando(NAM,Nombre);
-				Altomando.add(altomando); // falta agregar los pokemons de los altos mandos
+				Altomando.add(altomando); 
 			}
 			
 		}catch(IOException e) {}
@@ -88,15 +94,16 @@ public class Taller2 {
 			File Registros = new File("Registros");
 			Scanner lector2 = new Scanner(Registros);
 			String linea;
-			
-			
+			Registros registros = null;
 			if(lector2.hasNextLine()) {
 				linea = lector2.nextLine();
 				String[] partes2 = linea.split(";");
 				String Nombre = partes2[0];
-				for(int i = 0; i <partes2.length;i++) {
+				int CantidadMedallas = 8;
+				registros = new Registros(Nombre,CantidadMedallas);
+				for(int i = 0; i <CantidadMedallas;i++) {
 					String Medallas = partes2[i+1];
-					//falta el agregar registros
+					registros.AñadirMedallas(Medallas, i);
 					
 				}
 				
@@ -106,14 +113,18 @@ public class Taller2 {
 			while(lector2.hasNextLine()) {
 				linea = lector2.nextLine();
 				String[] partes2 = linea.split(";");
-				String Pokemon = partes2[0];
+				String NombrePokemon = partes2[0];
 				boolean Estado = Boolean.parseBoolean(partes2[1]);
-				//Terminar la lectura
 				
+				for(Pokemon p: Pokemones) {
+					if(p.getPokemon().equals(NombrePokemon)) {
+						registros.AñadirPokemon1(p,Estado);
+					}
+				}
 				
 				
 			}
-			
+			Registro.add(registros);
 		}catch(IOException e) {}
 		try {
 			File Gimnasios = new File("Gimnasios");
@@ -121,7 +132,7 @@ public class Taller2 {
 			String linea;
 			
 			
-			if(lector4.hasNextLine()) {
+			while(lector4.hasNextLine()) {
 				linea = lector4.nextLine();
 				String[] partes4 = linea.split(";");
 				int NG = Integer.valueOf(partes4[0]);// NG = Numero Gimnasio
@@ -131,10 +142,14 @@ public class Taller2 {
 				Gimnasios gimnasios = new Gimnasios(NG,Lider,Estado,CantidadPokemons);
 				for(int i = 0; i <CantidadPokemons;i++) {
 					String Pokemons = partes4[i+4];
-					
+					for(Pokemon p: Pokemones) {
+						if(p.getPokemon().equals(Pokemons)) {
+							gimnasios.AñadirPokemon2(p,i);
+						}
+					}
 					
 				}
-				Gim.add(gimnasios);// falta agregar los pokemons del gimnasio
+				Gim.add(gimnasios);
 				
 			}
 			
@@ -158,6 +173,8 @@ public class Taller2 {
 					System.out.println("Apodo no ingresado");
 				}
 				if(ID!=null){
+					//BufferedWriter duracion = new BufferedWriter(new FileWriter("Registros.txt",false));
+					System.out.println("Bienvenido " +ID+"!!");
 					
 				}
 			}
@@ -170,14 +187,6 @@ public class Taller2 {
 		
 
 	}
-	public void EncontrarPokemon(String pokemon,boolean estado,ArrayList<Pokemon> Pokedex) {
-		for(int k =  0;k < Pokedex.size();k++){
-			if(pokemon == Pokedex.get(k).getPokemon()) {
-				PokemonsEcontrados.add(pokemon);
-			}
-			
-		}
-		
-	}
+	
 
 }
