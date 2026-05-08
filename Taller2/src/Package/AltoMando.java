@@ -1,5 +1,7 @@
 package Package;
 
+import java.util.ArrayList;
+
 public class AltoMando {
 	private int NAM; //NAM = Numero Alto Mando
 	private String Nombre;
@@ -32,5 +34,15 @@ public class AltoMando {
 		
 		
 	}
+	public ArrayList<Pokemon> getCP() {
+	    ArrayList<Pokemon> AltoMando = new ArrayList<>();
+	    for (int i = 0; i < CP.length; i++) {
+	        if (CP[i] != null) {
+	            AltoMando.add(CP[i]);
+	        }
+	    }
+	    return AltoMando;
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 package Package;
 
+import java.util.ArrayList;
 
 public class Gimnasios {
 	private int NG; // NG = Numero Gimnasio
@@ -32,6 +33,15 @@ public class Gimnasios {
 		CP[indice]= pokemon;
 		
 		
+	}
+	public ArrayList<Pokemon> getCP(){
+		ArrayList<Pokemon> Rival = new ArrayList<>();
+		for(int i = 0; i <CP.length; i++) {
+			if(CP[i] != null) {
+				Rival.add(CP[i]);
+			}
+		}
+		return Rival;
 	}
 
 	

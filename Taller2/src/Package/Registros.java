@@ -32,6 +32,12 @@ public class Registros {
 	public void AñadirMedallas(String NombreMedalla,int indice) {
 		Medallas[indice] = NombreMedalla;
 	}
+	public ArrayList<Pokemon> getPokemones(){
+		return Pokemones;
+	}
+	public ArrayList<Boolean> getEstados(){
+		return Estados;
+	}
 	
 	
 	
