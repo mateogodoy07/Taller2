@@ -437,21 +437,24 @@ public class Taller2 {
 		Lista.set(Pokemon2,temporal);
 	}
 	
-	public static boolean Batalla(String MiNombre,ArrayList<Pokemon>MisPokemon,String NombreRival,ArrayList<Pokemon>PokemonRival) {
+	public static void Batalla(String MiNombre,ArrayList<Pokemon>MisPokemon,String NombreRival,ArrayList<Pokemon>PokemonRival) {
 		int IM = 0; // IM = Indice Mio
 		int IR = 0; // IR = Indice Rival
 		int opcion = 0;
+		double AtaqueFinal = 0; 
+		
+		ArrayList<Pokemon> EquipoOficial = new ArrayList<>();
 		for(int j = 0; j  < 6; j++) {
 			if(j < MisPokemon.size()) {
 				Pokemon p = MisPokemon.get(j);
-				
+				EquipoOficial.add(p);
 				}
 					
 		}
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		while(IM < p.size() && IR < PokemonRival.size()) {
+		while(IM < EquipoOficial.size() && IR < PokemonRival.size()) {
 			Pokemon mipokemon = MisPokemon.get(IM);
 			Pokemon pokemonRival = PokemonRival.get(IR);
 			
@@ -472,18 +475,76 @@ public class Taller2 {
 				System.out.println(mipokemon +" -> "+ misStats+" puntos");
 				System.out.println(pokemonRival +" -> "+ statsRival+" puntos");
 				
-				ObtenerEfectividad(mipokemon.getTipo(),pokemonRival.getTipo());
+				double Ataque = TablaTipos.ObtenerEfectividad(mipokemon.getTipo(),pokemonRival.getTipo());
+				
+				if(Ataque == 0.5) {
+					System.out.println(mipokemon+ " No es efectivo contra "+pokemonRival);
+					AtaqueFinal = misStats * Ataque;
+					System.out.println(mipokemon+ " -> "+(int)AtaqueFinal+" puntos");
+					System.out.println(pokemonRival +" -> "+ statsRival+" puntos");
+				}
+				if(Ataque == 2.0) {
+					System.out.println(mipokemon+ " Es muy efectivo contra "+pokemonRival);
+					AtaqueFinal = misStats * Ataque;
+					System.out.println(mipokemon+ " -> "+(int)AtaqueFinal+" puntos");
+					System.out.println(pokemonRival +" -> "+ statsRival+" puntos");
+				}
+				
+				if(AtaqueFinal > statsRival) {
+					System.out.println("Ha Ganado "+mipokemon+"!"+" "+pokemonRival+ " ha sido derrotado!!");
+					IR++;
+				}
+				if(AtaqueFinal < statsRival) {
+					System.out.println("Ha Ganado "+pokemonRival+"!"+" "+mipokemon+ " ha sido derrotado...");
+					Estado(EquipoOficial,mipokemon,false);
+					IM++;
+				}
 
 
-			}
+			} // agregar opcion 2 y 3
 			
 			
+		}
+		if(IM>IR) {
+			System.out.println("Haz Ganado el Combate Contra "+NombreRival);
+			//hacer la agregacion de medalla al archivo
+		}
+		if(IM < IR) {
+			System.out.println("Te has quedado sin pokemons en tu equipo!");
+			System.out.println("Volviendo al menu...");
 		}
 		
 		
 	}
-	public static void Estado() {
-		
+	public static void Estado(ArrayList<Pokemon> Equipo, Pokemon MiPokemon, boolean estado) {
+	    try {
+	        
+	        File archivo = new File("Registros.txt");
+	        Scanner lector = new Scanner(archivo);
+	        ArrayList<String> Pokemons = new ArrayList<>();
+	        
+	        while (lector.hasNextLine()) {
+	            Pokemons.add(lector.nextLine());
+	        }
+	        lector.close();
+	        
+	        
+	        for (int i = 0; i < Pokemons.size(); i++) {
+	            String[] partes = Pokemons.get(i).split(";");
+	            if (partes[0].equals(MiPokemon.getPokemon())) {
+	                Pokemons.set(i, MiPokemon.getPokemon() + ";Debilitado"); 
+	            }
+	        }
+	        
+	       
+	        BufferedWriter escritor = new BufferedWriter(new FileWriter("Registros.txt", false));
+	        for (String linea : Pokemons) {
+	            escritor.write(linea);
+	            escritor.newLine();
+	        }
+	        escritor.close();
+	        
+	    } catch (IOException e) {}
 	}
 	
 
