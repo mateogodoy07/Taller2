@@ -26,6 +26,9 @@ public class Gimnasios {
 	public String getEstado() {
 		return Estado;
 	}
+	public void setEstado(String estado) {
+		Estado = estado;
+	}
 	public int getCantidadPokemon() {
 		return CantidadPokemon;
 	}
